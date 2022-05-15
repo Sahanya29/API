@@ -1,30 +1,67 @@
 import {useState,useEffect} from 'react'
-
+import axios from 'axios' 
 
 function Useeffectdemo()
 
 {
-    let[count1,setCount1]=useState(0)
-    let[count2,setCount2]=useState(0)
-  
-  useEffect(()=>{
-      console.log("use the effect")
-  },[count1])
+    let [users,setUsers]=useState([])
+    let[error,setError]=useState('')
+ useEffect(()=>{
+     axios.get("https://jsonplaceholder.typicode.com/posts")
+     .then(response=>setUsers(response.data))
+     .catch(err=>setError(err.message))
+     
 
-     const chageState1=()=>{
-         setCount1(count1+1)
-     }
-     const chageState2=()=>{
-        setCount2(count2+1)
-    }
+     //fetch('https://jsonplaceholder.typicode.com/posts')
+
+ //   .then(response=>response.json())
+   // .then((apiData)=> setUsers(apiData))
+    //.catch(err=>console.log(err))
     
-    return (<div className='container'>
-        <h1 >USE EFFECT</h1>
-        <p className='display-1  '> count1:{count1}</p>
-        <p className='display-1 '>count2:{count2}</p>
-        <button className='btn  mt-3 btn-danger wt-3' onClick={chageState1}>counter_1</button>
-        <button className='btn  mt-3 btn-danger wt-3' onClick={chageState2}>counter_2</button>
-        </div>
+},[])
+
+
+return (
+/*headings of the table
+*/ 
+    <div className='container '>
+        {error!==''&&<h1 className='display-1 text-danger'>{error}</h1>}
+        {users.length ==0 &&  < p className='display-1 text-center text-danger'>invalid url</p>}
+        {users.length  !==0 &&          
+    <table className=' table text-center'>
+        <thead>
+            <tr>
+                <th>userId</th>
+                <th>id</th>
+                <th>title</th>
+            </tr>
+
+            
+        </thead>
+    {/* body fecting data from API */}
+        <tbody>
+            {
+            users.map((userObj)=>
+            <tr key={userObj.id}>
+                <td>{userObj.userId}</td>
+                <td>{userObj.id}</td>
+                <td>{userObj.title}</td>
+                
+                    </tr>)
+
+            }
+        </tbody>
+    </table>}
+</div>
 )
+        
+       
 }
 export default Useeffectdemo
+
+
+
+
+
+
+

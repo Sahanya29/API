@@ -13,7 +13,7 @@ setData(data)
   let [city,setcity]= useState('hyd')
   */
   return (
-    <div className='container text-center mt-5 bg-warning'>
+    <div className='container text-center mt-5 '>
       <Useeffectdemo/>
     </div>
   )
